@@ -46,8 +46,13 @@ const selectButtonLeft = document.getElementsByClassName("arrow-left");
 const documentSelector = document.getElementsByClassName("container");
 
 const selectButtonCharacter = document.getElementById("character-selector");
+
 const textInfo = document.getElementById("character-info");
 const descriptionElement = document.getElementById("text-description");
+const tittleInfo = document.getElementById("main-tittle");
+const imageInfo = document.getElementById("image-info");
+
+const buttonBack = document.getElementById("button-back");
 
 
 console.log(selectButtonCharacter.textContent);
@@ -100,8 +105,15 @@ selectButtonCharacter.addEventListener("click", () => {
 
     documentSelector[0].classList.add("visibility");
     textInfo.classList.add("text-visibility");
-
+    
+    tittleInfo.textContent = Object.keys(imagePaths[currentIndex])[0];
     descriptionElement.textContent = descriptionText;
-    console.log(descriptionText);
 
+    imageInfo.src =  imagePaths[currentIndex][Object.keys(imagePaths[currentIndex])]
+});
+
+
+buttonBack.addEventListener("click", () => {
+    documentSelector[0].classList.remove("visibility");
+    textInfo.classList.remove("text-visibility");
 });
