@@ -56,7 +56,6 @@ body{
 }
 
 .arrow-left:hover, .arrow-right:hover {
-    transform: scale(1,1);
     box-shadow: 0 0px 5px 2px #00001a;
 }
 
@@ -81,8 +80,8 @@ body{
     align-content: center;
     align-items: center;
     text-align: center;
-    width: 350px;
-    height: 350px;
+    width: 400px;
+    height: 400px;
 }
 
 .container .container-img #img-selector{
@@ -92,7 +91,8 @@ body{
     object-fit:cover;
     max-width: 100%;
     max-height: 100%;
-    transition: all 0.5s ease-in-out ; 
+    cursor: pointer;
+    transition: all 0.5s ease-in-out; 
     animation-iteration-count: infinite;
 }
 
@@ -119,6 +119,7 @@ body{
 
 #character-selector {
     background-color: rgba(18, 46, 205, 0.83);
+    width: 10vw;
     position: absolute;
     text-align: center;
     bottom: 35px;
@@ -127,6 +128,7 @@ body{
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 15px;
     transition: all .5s;
 }
 
@@ -158,11 +160,18 @@ body{
     margin-top: 15px;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
+
+#character-info #main-tittle{
+    padding: 15px;
+    font-size: 2vw;
+}
+
 
 #character-info #text-description{
     padding: 15px;
-    margin-top: 40px;
+    margin-top: 10px;
     max-width: 100%;
     text-justify:distribute;
     overflow: auto;
@@ -170,16 +179,20 @@ body{
     font-size: 1.3vw;
 }
 
-#character-info button{
+#character-info #button-back{
     background-color: rgba(18, 46, 205, 0.83);
     padding: 10px 20px;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    height: 50px;
+    height: 50px;
     transition: all 0.5s;
-    height: 50px;
-    height: 50px;
+}
+
+#character-info #button-back:hover{
+    box-shadow: 0 0px 3px 1px #00001a;
 }
 
 

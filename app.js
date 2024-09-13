@@ -1,6 +1,7 @@
 // Array con las rutas de las imágenes
 const imagePaths = [
     {"Arquero":"assets/image-selector/arquero.png"},
+    {"Bruja Nocturna":"assets/image-selector/bruja.png"},
     {"Caballero":"assets/image-selector/caballero.png"},
     {"Dragón":"assets/image-selector/dragon.png"},
     {"Goblin":"assets/image-selector/goblin.webp"},
@@ -15,6 +16,8 @@ const imagePaths = [
 
 const textContentImages = [
     {"Arquero":"Dispara una flecha mágica que atraviesa y daña a los enemigos que se interponen en su camino. No es ningún truco, ¡es magia! Arquero mágico es una carta de rareza legendaria de Clash Royale que puede obtenerse a partir de la arena 5."},
+
+    {"Bruja Nocturna":"es una tropa de base constructora que proviene de Clash Royale, junto con el bombardero y el bebé dragón. Sin embargo, dispara el mismo proyectil que la Bruja, a diferencia de su contraparte cuerpo a cuerpo de Clash Royale, a pesar de blandir un hacha."},
 
     {"Caballero":"Se puede utilizar como tanque para tropas más pequeñas como los Duendes. Es una gran carta para usar al frente de un mini-ataque. Tiene una gran sinergia en particular con los mazos de carnada de hechizos, y con el Barril de duendes, además es también común en mazos de Bait junto a la Valquiria."},
 
@@ -44,14 +47,13 @@ const imgSelector = document.getElementById("img-selector");
 const selectButtonRight = document.getElementsByClassName("arrow-right");
 const selectButtonLeft = document.getElementsByClassName("arrow-left");
 const documentSelector = document.getElementsByClassName("container");
-
+const selectImg = document.getElementById("img-selector");
 const selectButtonCharacter = document.getElementById("character-selector");
 
 const textInfo = document.getElementById("character-info");
 const descriptionElement = document.getElementById("text-description");
 const tittleInfo = document.getElementById("main-tittle");
 const imageInfo = document.getElementById("image-info");
-
 const buttonBack = document.getElementById("button-back");
 
 
@@ -99,6 +101,20 @@ selectButtonLeft[0].addEventListener("click", () => {
 
 
 selectButtonCharacter.addEventListener("click", () => {
+    // Mostrar o ocultar el texto con la descripción de la carta
+    const currentCharacter = Object.keys(imagePaths[currentIndex])[0];
+    const descriptionText = textContentImages[currentIndex][currentCharacter];
+
+    documentSelector[0].classList.add("visibility");
+    textInfo.classList.add("text-visibility");
+    
+    tittleInfo.textContent = Object.keys(imagePaths[currentIndex])[0];
+    descriptionElement.textContent = descriptionText;
+
+    imageInfo.src =  imagePaths[currentIndex][Object.keys(imagePaths[currentIndex])]
+});
+
+selectImg.addEventListener("click", () => {
     // Mostrar o ocultar el texto con la descripción de la carta
     const currentCharacter = Object.keys(imagePaths[currentIndex])[0];
     const descriptionText = textContentImages[currentIndex][currentCharacter];
