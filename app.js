@@ -42,94 +42,74 @@ const textContentImages = [
 // Inicializar el índice de la imagen a 0
 let currentIndex = 0;
 
-// Obtener la referencia a la imagen, los elementos de las fechas en sus costados y del botón selector
+// Obtener referencias a los elementos HTML
+const documentSelector = document.getElementsByClassName("container")[0];
 const imgSelector = document.getElementById("img-selector");
-const selectButtonRight = document.getElementsByClassName("arrow-right");
-const selectButtonLeft = document.getElementsByClassName("arrow-left");
-const documentSelector = document.getElementsByClassName("container");
-const selectImg = document.getElementById("img-selector");
+const selectButtonRight = document.getElementsByClassName("arrow-right")[0];
+const selectButtonLeft = document.getElementsByClassName("arrow-left")[0];
 const selectButtonCharacter = document.getElementById("character-selector");
 
+// Obtener referencias a los elementos HTML del contenedor descriptivo
 const textInfo = document.getElementById("character-info");
-const descriptionElement = document.getElementById("text-description");
 const tittleInfo = document.getElementById("main-tittle");
+const descriptionElement = document.getElementById("text-description");
 const imageInfo = document.getElementById("image-info");
 const buttonBack = document.getElementById("button-back");
 
-
+/*
 console.log(selectButtonCharacter.textContent);
 console.log(selectButtonCharacter);
-
 let key = Object.keys(imagePaths[0])
 console.log(imagePaths[0][key])
+*/
 
-if (currentIndex == 0){
-    selectButtonLeft[0].classList.add("selected");
-    selectButtonCharacter.textContent = Object.keys(imagePaths[currentIndex]);
+
+// Actualizar la imagen y texto según el índice
+function updateCharacterDisplay(index) {
+    const characterName = Object.keys(imagePaths[index]);
+    const characterImage = imagePaths[index][characterName];
+
+    imgSelector.src = characterImage;
+    selectButtonCharacter.textContent = characterName;
+
+    // Actualizar la visibilidad de las flechas
+    selectButtonLeft.classList.toggle("selected", index === 0);
+    selectButtonRight.classList.toggle("selected", index === imagePaths.length - 1);
 }
 
-// Añadir un event listener al botón de selección
-selectButtonRight[0].addEventListener("click", () => {
-    // Cambiar al siguiente índice de imagen
-    currentIndex = currentIndex + 1;
-    selectButtonLeft[0].classList.remove("selected");
-    selectButtonCharacter.textContent = Object.keys(imagePaths[currentIndex<= imagePaths.length -1 ? currentIndex: imagePaths.length-1]);
-
-    if (currentIndex >= imagePaths.length -1) {
-        currentIndex = imagePaths.length -1;
-        selectButtonRight[0].classList.add("selected");
-    }
-
-    // Cambiar el atributo src de la imagen
-    imgSelector.src = imagePaths[currentIndex][Object.keys(imagePaths[currentIndex])];
-});
+// Cambiar al siguiente o al anterior personaje
+function changeCharacter(direction) {
+    currentIndex = Math.max(0, Math.min(imagePaths.length - 1, currentIndex + direction));
+    updateCharacterDisplay(currentIndex);
+}
 
 
-selectButtonLeft[0].addEventListener("click", () => {
-    // Cambiar al siguiente índice de imagen
-    currentIndex = (currentIndex - 1);
-    selectButtonRight[0].classList.remove("selected");
-    selectButtonCharacter.textContent = Object.keys(imagePaths[currentIndex >= 0 ? currentIndex: 0]);
+// Mostrar la información del personaje seleccionado
+function showCharacterInfo() {
+    const characterName = Object.keys(imagePaths[currentIndex]);
+    const characterDescription = textContentImages[currentIndex][characterName];
 
-    if (currentIndex <= 0) {
-        currentIndex = 0;
-        selectButtonLeft[0].classList.add("selected");
-    }
-    // Cambiar el atributo src de la imagen
-    imgSelector.src = imagePaths[currentIndex][Object.keys(imagePaths[currentIndex])];
-});
-
-
-selectButtonCharacter.addEventListener("click", () => {
-    // Mostrar o ocultar el texto con la descripción de la carta
-    const currentCharacter = Object.keys(imagePaths[currentIndex])[0];
-    const descriptionText = textContentImages[currentIndex][currentCharacter];
-
-    documentSelector[0].classList.add("visibility");
+    documentSelector.classList.add("visibility");
     textInfo.classList.add("text-visibility");
-    
-    tittleInfo.textContent = Object.keys(imagePaths[currentIndex])[0];
-    descriptionElement.textContent = descriptionText;
 
-    imageInfo.src =  imagePaths[currentIndex][Object.keys(imagePaths[currentIndex])]
-});
+    tittleInfo.textContent = characterName;
+    descriptionElement.textContent = characterDescription;
+    imageInfo.src = imagePaths[currentIndex][characterName];
+}
 
-selectImg.addEventListener("click", () => {
-    // Mostrar o ocultar el texto con la descripción de la carta
-    const currentCharacter = Object.keys(imagePaths[currentIndex])[0];
-    const descriptionText = textContentImages[currentIndex][currentCharacter];
 
-    documentSelector[0].classList.add("visibility");
-    textInfo.classList.add("text-visibility");
-    
-    tittleInfo.textContent = Object.keys(imagePaths[currentIndex])[0];
-    descriptionElement.textContent = descriptionText;
+// Event listeners para las flechas y los botones
+selectButtonRight.addEventListener("click", () => changeCharacter(1));
+selectButtonLeft.addEventListener("click", () => changeCharacter(-1));
 
-    imageInfo.src =  imagePaths[currentIndex][Object.keys(imagePaths[currentIndex])]
-});
-
+selectButtonCharacter.addEventListener("click", showCharacterInfo);
+imgSelector.addEventListener("click", showCharacterInfo);
 
 buttonBack.addEventListener("click", () => {
-    documentSelector[0].classList.remove("visibility");
+    documentSelector.classList.remove("visibility");
     textInfo.classList.remove("text-visibility");
 });
+
+
+// Inicialización
+updateCharacterDisplay(currentIndex);
